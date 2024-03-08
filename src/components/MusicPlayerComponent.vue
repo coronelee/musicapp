@@ -5,7 +5,7 @@ const props = defineProps({
 
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
-const playingSong = ref(false);
+const playingSong = ref(true);
 const music = ref({
   id: "",
   img: "",
@@ -15,8 +15,9 @@ const music = ref({
   src: "",
 });
 const durationSong = ref();
+const maxRange = ref(0);
 const currentTimeSong = ref();
-const editMusic = (id) => {
+const editMusic = () => {
   axios
     .get("https://f97a390b40b51192.mokky.dev/musics?id=" + props.statePlayer)
     .then((response) => {
@@ -31,8 +32,7 @@ const editMusic = (id) => {
 let audio = new Audio();
 
 onMounted(() => {
-  editMusic(props.statePlayer);
-  audio.src = music.value.src;
+  editMusic();
 });
 watch(
   () => props.statePlayer,
@@ -43,27 +43,42 @@ watch(
 watch(
   () => music.value.src,
   (newValue) => {
-    audio.src = newValue;
-
-    document.getElementById("player").classList.remove("hidden");
-
-    // audio.play();
-
-    audio.onloadedmetadata = function () {
-      audio.addEventListener("play", function (e) {
-        setInterval(() => {
-          currentTimeSong.value = this.currentTime;
-        }, 200);
-      });
-      durationSong.value = this.duration;
-    };
+    editSrcAudio(newValue);
   }
 );
+
+const editSrcAudio = (newValue) => {
+  audio.src = newValue;
+
+  document.getElementById("player").classList.remove("hidden");
+
+  audio.play();
+
+  audio.onloadedmetadata = function () {
+    setInterval(() => {
+      currentTimeSong.value =
+        String(Number(String(this.currentTime).split(".")[0]) / 60).split(
+          "."
+        )[0] +
+        ":" +
+        (Number(String(this.currentTime).split(".")[0]) % 60);
+      // currentTimeSong.value = String(this.currentTime).split(".")[0];
+
+      document.getElementById("timeline").value = this.currentTime;
+    }, 200);
+    durationSong.value =
+      String(Number(String(this.duration).split(".")[0]) / 60).split(".")[0] +
+      ":" +
+      (Number(String(this.duration).split(".")[0]) % 60);
+    maxRange.value = this.duration;
+  };
+};
 
 watch(
   () => props.statePlayer,
   (newValue) => {
     editMusic(newValue);
+    audio.play();
   }
 );
 
@@ -83,7 +98,7 @@ const pauseSong = () => {
 
 <template>
   <div
-    class="bg-[#282828] w-full h-[150px] fixed bottom-0 flex font-exo justify-between [&>div]:w-1/3 gap-4 p-4"
+    class="bg-[#282828] w-full h-[150px] fixed bottom-0 flex font-exo justify-between [&>div]:w-1/3 gap-4 p-4 animate-[openPlayer_0.5s_linear]"
     id="player"
   >
     <div class="flex h-full justify-between">
@@ -105,21 +120,23 @@ const pauseSong = () => {
           @click="pauseSong()"
           v-if="playingSong"
         />
-        <img src="/pause.svg" alt="play" @click="pauseSong()" v-else />
+        <img src="/pause.svg" alt="pause" @click="pauseSong()" v-else />
       </div>
-      <div class="w-full h-1/2 flex text-white font-exo_italic">
-        <span>{{ currentTimeSong }}</span>
-
+      <div
+        class="w-full h-1/2 flex flex-col text-white font-exo_italic justify-between items-center"
+      >
         <input
           class="w-full"
           type="range"
-          :max="durationSong"
-          :value="currentTimeSong"
+          :max="maxRange"
           defaultValue="0"
           id="timeline"
           @change="audio.currentTime = $event.target.value"
         />
-        <span>{{ durationSong }}</span>
+        <div class="w-full flex justify-between">
+          <span class="w-1/5">{{ currentTimeSong }}</span
+          ><span class="w-1/5 text-right">{{ durationSong }}</span>
+        </div>
       </div>
     </div>
     <div class="flex justify-end items-center px-8">
