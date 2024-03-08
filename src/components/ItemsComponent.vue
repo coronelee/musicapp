@@ -21,7 +21,9 @@ onMounted(() => {
     <div class="flex flex-col w-full px-8 h-full gap-12">
       <div class="overflow-x-hidden">
         <span class="text-white text-3xl font-exo">Good afternoon</span>
-        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828]">
+        <div
+          class="grid grid-cols-3 max-[1080px]:grid-cols-2 max-[730px]:grid-cols-1 gap-4 mt-8 [&>div]:bg-[#282828]"
+        >
           <div
             v-for="albums in albums"
             :key="albums"

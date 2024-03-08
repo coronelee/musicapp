@@ -73,6 +73,9 @@ const editSrcAudio = (newValue) => {
       } else currentTimeSong.value = min + ":" + sec;
 
       document.getElementById("timeline").value = this.currentTime;
+      if (this.currentTime == this.duration) {
+        nextPrevMusic(+1);
+      }
     }, 1000);
     durationSong.value =
       String(Number(String(this.duration).split(".")[0]) / 60).split(".")[0] +
@@ -116,10 +119,10 @@ const nextPrevMusic = (action) => {
 
 <template>
   <div
-    class="bg-[#282828] w-full h-[150px] fixed bottom-0 flex font-exo justify-between [&>div]:w-1/3 gap-4 p-4 animate-[openPlayer_0.5s_linear]"
+    class="bg-[#282828] z-20 w-full h-[150px] fixed bottom-0 flex font-exo justify-between items-center [&>div]:w-1/3 gap-4 p-4 animate-[openPlayer_0.5s_linear] max-[850px]:[&>div]:w-full max-[850px]:flex-col"
     id="player"
   >
-    <div class="flex h-full justify-between">
+    <div class="flex h-full justify-between max-[850px]:hidden">
       <div class="h-full w-[118px] bg-slate-500"></div>
       <div class="flex gap-2 px-6 h-full w-2/3">
         <div class="flex flex-col gap-2 px-6 justify-center w-full">
@@ -130,7 +133,10 @@ const nextPrevMusic = (action) => {
       <img src="/like.svg" alt="like" class="w-8" />
     </div>
     <div id="aud" class="hidden"></div>
-    <div class="flex flex-col justify-center items-center" id="musicContainer">
+    <div
+      class="flex flex-col justify-center items-center gap-2"
+      id="musicContainer"
+    >
       <div
         class="flex w-full h-1/2 justify-center items-center [&>img]:w-8 [&>img]:cursor-pointer gap-4"
       >
@@ -162,13 +168,13 @@ const nextPrevMusic = (action) => {
       </div>
     </div>
     <div
-      class="flex justify-end items-center px-8 gap-8 [&>img]:w-8 [&>img]:cursor-pointer"
+      class="flex justify-end items-center px-8 gap-8 [&>img]:w-8 [&>img]:cursor-pointer max-[850px]:justify-center max-[850px]:mt-[-20px]"
     >
       <img
         src="/mute.svg"
         alt="mute"
         @click="audio.muted = !audio.muted"
-        v-if="!audio.muted"
+        v-if="!audio.muted && audio.volume != 0"
       />
       <img
         src="/unmute.svg"
@@ -180,7 +186,6 @@ const nextPrevMusic = (action) => {
         <input
           class="w-[100px] h-[10px] bg-transparent"
           type="range"
-          defaultValue="100"
           @input="audio.volume = $event.target.value / 100"
         />
       </div>

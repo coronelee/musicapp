@@ -26,12 +26,16 @@ onMounted(() => {
     <span
       v-for="music in album"
       :key="music"
-      class="text-white text-3xl font-exo cursor-pointer flex rounded-xl overflow-hidden h-[120px] w-1/2 bg-[#282828] items-center justify-between"
+      class="text-white text-3xl font-exo cursor-pointer flex rounded-xl overflow-hidden h-[120px] max-[1660px]:w-2/3 max-[1250px]:w-full w-1/2 bg-[#282828] items-center justify-between"
       @click="props.editStatePlayer(music.id)"
     >
-      <span class="w-[120px] h-full bg-slate-100">{{ music.id }}</span>
+      <span class="w-[120px] h-full bg-slate-500 max-[360px]">{{
+        music.id
+      }}</span>
       <br />
-      <span class="ml-4 text-left w-[calc(100%-220px)]">{{ music.name }}</span>
+      <span class="ml-4 text-left w-[calc(100%-220px)] max-[850px]:hidden">{{
+        music.name
+      }}</span>
       <div class="w-[100px] h-full [&>img]:w-8 flex gap-2">
         <img src="/play.svg" alt="" />
         <img src="/like.svg" alt="" />

@@ -1,8 +1,11 @@
 <script setup>
+import { onMounted, ref } from "vue";
+
 defineProps({
   statePage: Number,
   editStatePage: Function,
 });
+const hideNav = ref(false);
 const navigation = [
   {
     name: "Home",
@@ -36,10 +39,36 @@ const navigation = [
     id: 5,
   },
 ];
+
+onMounted(() => {
+  if (window.innerWidth < 1090) {
+    hideNav.value = true;
+  }
+});
+const openNav = () => {
+  if (!hideNav.value) {
+    document
+      .getElementById("nav")
+      .classList.remove("animate-[openNav_0.5s_linear]");
+    document
+      .getElementById("nav")
+      .classList.add("animate-[closeNav_0.5s_linear]");
+  } else {
+    document
+      .getElementById("nav")
+      .classList.remove("animate-[closeNav_0.5s_linear]");
+    document
+      .getElementById("nav")
+      .classList.add("animate-[openNav_0.5s_linear]");
+  }
+};
 </script>
 <template>
-  <div
-    class="bg-black w-1/6 h-full fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
+  <nav
+    id="nav"
+    class="bg-black z-10 overflow-x-hidden max-[1090px]:w-1/12 w-1/6 h-full fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
+    :style="hideNav ? 'width: 8%' : 'width: auto'"
+    @click="(hideNav = !hideNav), openNav()"
   >
     <div class="w-full h-1/6 bg-slate-100/5">logo</div>
     <div>
@@ -55,5 +84,5 @@ const navigation = [
         >
       </button>
     </div>
-  </div>
+  </nav>
 </template>
