@@ -26,7 +26,7 @@ onMounted(() => {
     <span
       v-for="music in album"
       :key="music"
-      class="text-white text-3xl font-exo cursor-pointer flex rounded-xl h-[120px] w-1/2 bg-[#282828] items-center justify-between"
+      class="text-white text-3xl font-exo cursor-pointer flex rounded-xl overflow-hidden h-[120px] w-1/2 bg-[#282828] items-center justify-between"
       @click="props.editStatePlayer(music.id)"
     >
       <span class="w-[120px] h-full bg-slate-100">{{ music.id }}</span>
