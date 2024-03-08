@@ -65,7 +65,7 @@ const editSrcAudio = (newValue) => {
       // currentTimeSong.value = String(this.currentTime).split(".")[0];
 
       document.getElementById("timeline").value = this.currentTime;
-    }, 200);
+    }, 50);
     durationSong.value =
       String(Number(String(this.duration).split(".")[0]) / 60).split(".")[0] +
       ":" +
