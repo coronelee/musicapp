@@ -7,14 +7,16 @@ import { ref } from "vue";
 
 const statePage = ref(0);
 const stateAlbum = ref(0);
-
+const statePlayer = ref(0);
+const editStatePlayer = (value) => {
+  statePlayer.value = value;
+};
 const editStatePage = (value) => {
   statePage.value = value;
   stateAlbum.value = 0;
 };
 const editStateAlbum = (value) => {
   stateAlbum.value = value;
-  console.log(stateAlbum.value);
 };
 </script>
 <template>
@@ -26,8 +28,12 @@ const editStateAlbum = (value) => {
         :editIdAlbum="editIdAlbum"
         v-if="stateAlbum == 0"
       />
-      <AlbumComponent v-else :stateAlbum="stateAlbum" />
+      <AlbumComponent
+        v-else
+        :stateAlbum="stateAlbum"
+        :editStatePlayer="editStatePlayer"
+      />
     </div>
-    <MusicPlayerComponent />
+    <MusicPlayerComponent :statePlayer="statePlayer" />
   </div>
 </template>
