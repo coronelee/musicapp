@@ -17,9 +17,10 @@ const music = ref({
 const durationSong = ref();
 const maxRange = ref(0);
 const currentTimeSong = ref();
-const editMusic = () => {
+const stateMusic = ref(props.statePlayer);
+const editMusic = (id) => {
   axios
-    .get("https://f97a390b40b51192.mokky.dev/musics?id=" + props.statePlayer)
+    .get("https://f97a390b40b51192.mokky.dev/musics?id=" + id)
     .then((response) => {
       music.value.id = response.data[0].id;
       music.value.img = response.data[0].img;
@@ -32,10 +33,16 @@ const editMusic = () => {
 let audio = new Audio();
 
 onMounted(() => {
-  editMusic();
+  editMusic(props.statePlayer);
 });
 watch(
   () => props.statePlayer,
+  (newValue) => {
+    stateMusic.value = newValue;
+  }
+);
+watch(
+  () => stateMusic.value,
   (newValue) => {
     editMusic(newValue);
   }
@@ -95,6 +102,16 @@ const pauseSong = () => {
     playingSong.value = false;
   }
 };
+const nextPrevMusic = (action) => {
+  if (stateMusic.value < 7 && action > 0) {
+    editMusic((stateMusic.value += action));
+  }
+  // else editMusic(1);
+  if (stateMusic.value != 1 && action < 0) {
+    editMusic((stateMusic.value += action));
+  }
+  // else editMusic(7);
+};
 </script>
 
 <template>
@@ -115,15 +132,17 @@ const pauseSong = () => {
     <div id="aud" class="hidden"></div>
     <div class="flex flex-col justify-center items-center" id="musicContainer">
       <div
-        class="flex w-full h-1/2 justify-center items-center [&>img]:w-8 [&>img]:cursor-pointer"
+        class="flex w-full h-1/2 justify-center items-center [&>img]:w-8 [&>img]:cursor-pointer gap-4"
       >
+        <img src="/prev.svg" alt="" @click="nextPrevMusic(-1)" />
         <img
           src="/play.svg"
           alt="play"
           @click="pauseSong()"
-          v-if="playingSong"
+          v-if="!playingSong"
         />
         <img src="/pause.svg" alt="pause" @click="pauseSong()" v-else />
+        <img src="/next.svg" alt="" @click="nextPrevMusic(+1)" />
       </div>
       <div
         class="w-full h-1/2 flex flex-col text-white font-exo_italic justify-between items-center"
@@ -134,7 +153,7 @@ const pauseSong = () => {
           :max="maxRange"
           defaultValue="0"
           id="timeline"
-          @change="audio.currentTime = $event.target.value"
+          @input="audio.currentTime = $event.target.value"
         />
         <div class="w-full flex justify-between">
           <span class="w-1/5">{{ currentTimeSong }}</span
@@ -145,13 +164,24 @@ const pauseSong = () => {
     <div
       class="flex justify-end items-center px-8 gap-8 [&>img]:w-8 [&>img]:cursor-pointer"
     >
-      <img src="/mute.svg" alt="mute" @click="audio.muted = !audio.muted" />
+      <img
+        src="/mute.svg"
+        alt="mute"
+        @click="audio.muted = !audio.muted"
+        v-if="!audio.muted"
+      />
+      <img
+        src="/unmute.svg"
+        alt="mute"
+        @click="audio.muted = !audio.muted"
+        v-else
+      />
       <div id="volume">
         <input
           class="w-[100px] h-[10px] bg-transparent"
           type="range"
           defaultValue="100"
-          @change="audio.volume = $event.target.value / 100"
+          @input="audio.volume = $event.target.value / 100"
         />
       </div>
 
