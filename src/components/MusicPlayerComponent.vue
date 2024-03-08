@@ -38,7 +38,7 @@ watch(
   () => music.value.src,
   (newValue) => {
     document.getElementById("musicContainer").innerHTML =
-      "<audio controls> <source src=" + newValue + "></audio>";
+      "<audio controls autoplay> <source src=" + newValue + "></audio>";
   }
 );
 </script>
