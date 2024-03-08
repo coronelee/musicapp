@@ -56,16 +56,17 @@ const editSrcAudio = (newValue) => {
 
   audio.onloadedmetadata = function () {
     setInterval(() => {
-      currentTimeSong.value =
-        String(Number(String(this.currentTime).split(".")[0]) / 60).split(
-          "."
-        )[0] +
-        ":" +
-        (Number(String(this.currentTime).split(".")[0]) % 60);
-      // currentTimeSong.value = String(this.currentTime).split(".")[0];
+      let min = String(
+        Number(String(this.currentTime).split(".")[0]) / 60
+      ).split(".")[0];
+      let sec = Number(String(this.currentTime).split(".")[0]) % 60;
+      if (sec < 10) {
+        sec = "0" + sec;
+        currentTimeSong.value = min + ":" + sec;
+      } else currentTimeSong.value = min + ":" + sec;
 
       document.getElementById("timeline").value = this.currentTime;
-    }, 50);
+    }, 1000);
     durationSong.value =
       String(Number(String(this.duration).split(".")[0]) / 60).split(".")[0] +
       ":" +
@@ -113,7 +114,9 @@ const pauseSong = () => {
     </div>
     <div id="aud" class="hidden"></div>
     <div class="flex flex-col justify-center items-center" id="musicContainer">
-      <div class="flex w-full h-1/2 justify-center items-center [&>img]:w-8">
+      <div
+        class="flex w-full h-1/2 justify-center items-center [&>img]:w-8 [&>img]:cursor-pointer"
+      >
         <img
           src="/play.svg"
           alt="play"
@@ -126,7 +129,7 @@ const pauseSong = () => {
         class="w-full h-1/2 flex flex-col text-white font-exo_italic justify-between items-center"
       >
         <input
-          class="w-full"
+          class="w-full h-[10px] bg-transparent"
           type="range"
           :max="maxRange"
           defaultValue="0"
@@ -140,9 +143,55 @@ const pauseSong = () => {
       </div>
     </div>
     <div class="flex justify-end items-center px-8">
-      <img src="/hide.svg" alt="hide" class="w-8" @click="hidePlayer()" />
+      <img
+        src="/hide.svg"
+        alt="hide"
+        class="w-8 cursor-pointer"
+        @click="hidePlayer()"
+      />
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+input[type="range"] {
+  -webkit-appearance: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 50%;
+  background: #c5c5c5;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 10px;
+  background: rgb(255, 255, 255);
+  margin-top: -4px;
+}
+
+/* */
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 1px;
+  height: 16px;
+  width: 10px;
+  background: rgb(255, 255, 255);
+  margin-top: -4px;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 50%;
+  background: #c5c5c5;
+}
+
+input[type="range"]::-ms-thumb {
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+</style>
