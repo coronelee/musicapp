@@ -23,7 +23,7 @@ const editStateAlbum = (value) => {
 };
 </script>
 <template>
-  <div class="w-screen h-screen bg-[#181818] overflow-scroll">
+  <div class="">
     <div class="flex">
       <NavComponent :statePage="statePage" :editStatePage="editStatePage" />
       <ItemsComponent

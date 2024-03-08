@@ -142,13 +142,20 @@ const pauseSong = () => {
         </div>
       </div>
     </div>
-    <div class="flex justify-end items-center px-8">
-      <img
-        src="/hide.svg"
-        alt="hide"
-        class="w-8 cursor-pointer"
-        @click="hidePlayer()"
-      />
+    <div
+      class="flex justify-end items-center px-8 gap-8 [&>img]:w-8 [&>img]:cursor-pointer"
+    >
+      <img src="/mute.svg" alt="mute" @click="audio.muted = !audio.muted" />
+      <div id="volume">
+        <input
+          class="w-[100px] h-[10px] bg-transparent"
+          type="range"
+          defaultValue="100"
+          @change="audio.volume = $event.target.value / 100"
+        />
+      </div>
+
+      <img src="/hide.svg" alt="hide" @click="hidePlayer()" />
     </div>
   </div>
 </template>
@@ -157,6 +164,20 @@ const pauseSong = () => {
 input[type="range"] {
   -webkit-appearance: none;
 }
+/* GOOGLE CHROME */
+#volume > input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 12px;
+  width: 6px;
+  background: rgb(255, 255, 255);
+  margin-top: -3px;
+}
+#volume > input[type="range"]::-webkit-slider-runnable-track {
+  height: 50%;
+  background: #585858;
+}
+
 input[type="range"]::-webkit-slider-runnable-track {
   height: 50%;
   background: #c5c5c5;
@@ -170,8 +191,20 @@ input[type="range"]::-webkit-slider-thumb {
   background: rgb(255, 255, 255);
   margin-top: -4px;
 }
+/* MOZILLA FIREFOX */
+#volume > input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 12px;
+  width: 6px;
+  background: rgb(255, 255, 255);
+  margin-top: -3px;
+}
+#volume > input[type="range"]::-moz-range-track {
+  height: 50%;
+  background: #585858;
+}
 
-/* */
 input[type="range"]::-moz-range-thumb {
   -webkit-appearance: none;
   border: none;
@@ -186,6 +219,8 @@ input[type="range"]::-moz-range-track {
   height: 50%;
   background: #c5c5c5;
 }
+
+/* IE */
 
 input[type="range"]::-ms-thumb {
   height: 36px;

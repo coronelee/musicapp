@@ -1,7 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #181818;
+}
 @font-face {
   font-family: "exo";
   src: url("/fonts/exo.ttf");
@@ -10,38 +15,3 @@
   font-family: "exo_italic";
   src: url("/fonts/exo-italic.ttf");
 }
-
-audio::-webkit-media-controls-panel,
-*::-webkit-media-controls-panel {
-  background-color: #282828;
-  color: white;
-  border: none;
-}
-audio::-moz-audio {
-  background-color: #f2f2f2;
-  color: #333;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-audio::-webkit-media-controls-timeline {
-  margin-top: -40px;
-  background-color: white;
-}
-audio::-webkit-media-controls-play-button {
-  display: ;
-}
-
-/* <!-- audio::-webkit-media-controls-mute-button
-audio::-webkit-media-controls-timeline-container
-audio::-webkit-media-controls-current-time-display
-audio::-webkit-media-controls-time-remaining-display
-audio::-webkit-media-controls-timeline
-audio::-webkit-media-controls-volume-slider-container
-audio::-webkit-media-controls-volume-slider
-audio::-webkit-media-controls-seek-back-button
-audio::-webkit-media-controls-seek-forward-button
-audio::-webkit-media-controls-fullscreen-button
-audio::-webkit-media-controls-rewind-button
-audio::-webkit-media-controls-return-to-realtime-button
-audio::-webkit-media-controls-toggle-closed-captions-button --> */

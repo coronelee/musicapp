@@ -16,17 +16,17 @@ onMounted(() => {
 
 <template>
   <div
-    class="bg-[#181818] w-5/6 h-auto py-12 absolute right-0 top-0 overflow-y-scroll pb-[150px]"
+    class="bg-[#181818] w-5/6 pb-[200px] py-12 flex flex-col px-8 gap-4 absolute right-0 top-0 text-white text-3xl font-exo"
   >
-    <div class="flex flex-col px-8 h-full gap-12">
-      <div>
+    <div class="flex flex-col w-full px-8 h-full gap-12">
+      <div class="overflow-x-hidden">
         <span class="text-white text-3xl font-exo">Good afternoon</span>
         <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828]">
           <div
             v-for="albums in albums"
             :key="albums"
             @click="editStateAlbum(albums.id)"
-            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl overflow-hidden h-[120px]"
+            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
           >
             <div class="w-[120px] h-full bg-slate-100">img</div>
             <div class="flex justify-center items-center w-[calc(100%-120px)]">
@@ -35,26 +35,36 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div>
-        <span class="text-white text-3xl font-exo">Episodes for you</span>
-        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828] h-[400px]">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+      <div class="overflow-x-hidden">
+        <span class="text-white text-3xl font-exo">Good afternoon</span>
+        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828]">
+          <div
+            v-for="albums in albums"
+            :key="albums"
+            @click="editStateAlbum(albums.id)"
+            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
+          >
+            <div class="w-[120px] h-full bg-slate-100">img</div>
+            <div class="flex justify-center items-center w-[calc(100%-120px)]">
+              {{ albums.name }}
+            </div>
+          </div>
         </div>
       </div>
-      <div>
+      <div class="overflow-x-hidden">
         <span class="text-white text-3xl font-exo">Good afternoon</span>
-        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828] h-[400px]">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828]">
+          <div
+            v-for="albums in albums"
+            :key="albums"
+            @click="editStateAlbum(albums.id)"
+            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
+          >
+            <div class="w-[120px] h-full bg-slate-100">img</div>
+            <div class="flex justify-center items-center w-[calc(100%-120px)]">
+              {{ albums.name }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
