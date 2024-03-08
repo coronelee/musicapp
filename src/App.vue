@@ -14,13 +14,16 @@ const editStatePlayer = (value) => {
 const editStatePage = (value) => {
   statePage.value = value;
   stateAlbum.value = 0;
+  console.log(
+    statePage.value + " " + stateAlbum.value + " " + statePlayer.value
+  );
 };
 const editStateAlbum = (value) => {
   stateAlbum.value = value;
 };
 </script>
 <template>
-  <div class="w-screen h-screen">
+  <div class="w-screen h-screen bg-[#181818]">
     <div class="flex">
       <NavComponent :statePage="statePage" :editStatePage="editStatePage" />
       <ItemsComponent
@@ -34,6 +37,6 @@ const editStateAlbum = (value) => {
         :editStatePlayer="editStatePlayer"
       />
     </div>
-    <MusicPlayerComponent :statePlayer="statePlayer" />
+    <MusicPlayerComponent :statePlayer="statePlayer" v-if="statePlayer != 0" />
   </div>
 </template>

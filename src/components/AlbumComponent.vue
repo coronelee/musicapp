@@ -21,7 +21,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="bg-[#181818] w-5/6 h-auto pb-[200px] py-12 flex flex-col px-8 gap-4 absolute right-0 top-0 overflow-y-scroll text-white text-3xl font-exo"
+    class="bg-[#181818] w-5/6 pb-[200px] py-12 flex flex-col px-8 gap-4 absolute right-0 top-0 overflow-y-scroll text-white text-3xl font-exo"
   >
     <span
       v-for="music in album"

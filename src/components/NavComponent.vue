@@ -39,7 +39,7 @@ const navigation = [
 </script>
 <template>
   <div
-    class="bg-black w-1/6 h-[calc(100vh-150px)] fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
+    class="bg-black w-1/6 h-full fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
   >
     <div class="w-full h-1/6 bg-slate-100/5">logo</div>
     <div>
