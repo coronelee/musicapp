@@ -30,7 +30,7 @@ onMounted(() => {
             @click="editStateAlbum(albums.id)"
             class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
           >
-            <div class="w-[120px] h-full bg-slate-100">img</div>
+            <img src="/obl.jpeg" class="w-[120px] h-full" />
             <div class="flex justify-center items-center w-[calc(100%-120px)]">
               {{ albums.name }}
             </div>

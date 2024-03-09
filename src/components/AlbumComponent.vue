@@ -23,15 +23,14 @@ onMounted(() => {
   <div
     class="bg-[#181818] w-5/6 pb-[200px] py-12 flex flex-col px-8 gap-4 absolute right-0 top-0 text-white text-3xl font-exo"
   >
+    <span>{{ props.stateAlbum }}</span>
     <span
       v-for="music in album"
       :key="music"
       class="text-white text-3xl font-exo cursor-pointer flex rounded-xl overflow-hidden h-[120px] max-[1660px]:w-2/3 max-[1250px]:w-full w-1/2 bg-[#282828] items-center justify-between"
       @click="props.editStatePlayer(music.id)"
     >
-      <span class="w-[120px] h-full bg-slate-500 max-[360px]">{{
-        music.id
-      }}</span>
+      <img src="/obl.jpeg" class="w-[120px] h-full max-[360px]" />
       <br />
       <span class="ml-4 text-left w-[calc(100%-220px)] max-[850px]:hidden">{{
         music.name
