@@ -118,27 +118,31 @@ const nextPrevMusic = (action) => {
 };
 let fl = 0;
 const showFullPlayer = (event) => {
-  if (event == "pause" || event == "play") {
-    pauseSong();
-    fl = 1;
-  } else if (event == "hide") {
-    fullPlayer.value = false;
-    document.getElementById("player").classList.toggle("max-[850px]:m-2");
-    document
-      .getElementById("player")
-      .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
-    fl = 1;
-  } else if (event == "showFull") {
-    if (fullPlayer.value) {
-    } else {
-      if (fl == 0) {
-        fullPlayer.value = !fullPlayer.value;
-        document.getElementById("player").classList.toggle("max-[850px]:m-2");
-        document
-          .getElementById("player")
-          .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+  if (window.screen.width > 850) {
+    console.log(window.screen.width);
+  } else {
+    if (event == "pause" || event == "play") {
+      pauseSong();
+      fl = 1;
+    } else if (event == "hide") {
+      fullPlayer.value = false;
+      document.getElementById("player").classList.toggle("max-[850px]:m-2");
+      document
+        .getElementById("player")
+        .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+      fl = 1;
+    } else if (event == "showFull") {
+      if (fullPlayer.value) {
+      } else {
+        if (fl == 0) {
+          fullPlayer.value = !fullPlayer.value;
+          document.getElementById("player").classList.toggle("max-[850px]:m-2");
+          document
+            .getElementById("player")
+            .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+        }
+        fl = 0;
       }
-      fl = 0;
     }
   }
 };
@@ -271,7 +275,7 @@ const showFullPlayer = (event) => {
           @click="showFullPlayer('hide')"
         />
       </div>
-      <img src="/obl.jpeg" alt="" class="w-full rounded-xl" />
+      <img src="/obl.jpeg" alt="" class="w-full rounded-xl max-w-[300px]" />
       <div class="w-full flex flex-col gap-2">
         <div class="w-full flex justify-between">
           <div class="flex flex-col text-white font-exo">
