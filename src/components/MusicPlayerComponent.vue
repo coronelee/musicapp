@@ -116,25 +116,40 @@ const nextPrevMusic = (action) => {
   }
   // else editMusic(7);
 };
+let fl = 0;
 const showFullPlayer = (event) => {
   if (event == "pause" || event == "play") {
     pauseSong();
-  } else if (event == "showFull") {
-    fullPlayer.value = !fullPlayer.value;
+    fl = 1;
+  } else if (event == "hide") {
+    fullPlayer.value = false;
     document.getElementById("player").classList.toggle("max-[850px]:m-2");
     document
       .getElementById("player")
       .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+    fl = 1;
+  } else if (event == "showFull") {
+    if (fullPlayer.value) {
+    } else {
+      if (fl == 0) {
+        fullPlayer.value = !fullPlayer.value;
+        document.getElementById("player").classList.toggle("max-[850px]:m-2");
+        document
+          .getElementById("player")
+          .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+      }
+      fl = 0;
+    }
   }
 };
 </script>
-<!-- @click="showFullPlayer(false)" -->
 
 <template>
   <div
-    class="bg-[#282828] max-[850px] overflow-hidden h-auto max-[850px]:rounded-xl max-[850px]:m-2 z-20 w-full max-[850px]:w-[calc(100%-20px)] h-[150px] fixed bottom-0 font-exo animate-[openPlayer_0.5s_linear]"
+    class="bg-[#282828] max-[850px] overflow-hidden h-auto max-[850px]:rounded-xl max-[850px]:m-2 z-20 w-full max-[850px]:w-[calc(100%-20px)] h-[150px] fixed bottom-0 font-exo"
     id="player"
     @click="showFullPlayer('showFull')"
+    :style="fullPlayer ? 'border-radius: 0' : ''"
   >
     <div
       class="w-full h-full [&>div]:w-1/3 max-[850px]:[&>div]:w-full [&>div]:w-1/3 justify-between max-[850px]:flex-row flex items-center gap-4 p-4"
@@ -253,7 +268,7 @@ const showFullPlayer = (event) => {
           src="/hide.svg"
           alt="hide"
           class="w-8"
-          @click="showFullPlayer(true)"
+          @click="showFullPlayer('hide')"
         />
       </div>
       <img src="/obl.jpeg" alt="" class="w-full rounded-xl" />
@@ -292,10 +307,17 @@ const showFullPlayer = (event) => {
             <img
               src="/play.svg"
               alt="play"
-              @click="pauseSong()"
+              @click="showFullPlayer($event.target.id)"
+              id="play"
               v-if="!playingSong"
             />
-            <img src="/pause.svg" alt="pause" @click="pauseSong()" v-else />
+            <img
+              src="/pause.svg"
+              alt="pause"
+              @click="showFullPlayer($event.target.id)"
+              id="pause"
+              v-else
+            />
           </div>
 
           <img src="/next.svg" alt="" @click="nextPrevMusic(+1)" />
