@@ -201,6 +201,7 @@ const nextPrevMusic = (action) => {
   }
 };
 let fl = 0;
+let oldTouch = 0;
 const showFullPlayer = (event) => {
   if (window.screen.width > 850) {
     if (event == "pause" || event == "play") {
@@ -227,12 +228,33 @@ const showFullPlayer = (event) => {
           document
             .getElementById("player")
             .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+          setTimeout(() => {
+            document
+              .getElementById("fullPlayer")
+              .addEventListener("touchstart", touchstart);
+            function touchstart(event) {
+              oldTouch = event.changedTouches.item(0).clientY;
+              document
+                .getElementById("fullPlayer")
+                .addEventListener("touchmove", touchend);
+            }
+          }, 150);
         }
+
         fl = 0;
       }
     }
   }
 };
+
+function touchend(event) {
+  let difference = oldTouch - event.changedTouches.item(0).clientY;
+  // console.log(difference);
+  if (difference < -100) {
+    console.log(difference);
+    fullPlayer.value = false;
+  }
+}
 </script>
 <template>
   <div
@@ -362,6 +384,7 @@ const showFullPlayer = (event) => {
     <div
       v-else
       class="w-screen h-screen p-4 flex flex-col justify-between items-center overflow-hidden"
+      id="fullPlayer"
       :style="{
         backgroundImage:
           'linear-gradient(' +
