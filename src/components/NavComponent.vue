@@ -28,30 +28,16 @@ const navigation = [
     img: "/plus.svg",
     id: 3,
   },
-  {
-    name: "Liked Song",
-    img: "/like.svg",
-    id: 4,
-  },
-  {
-    name: "Your Episodes",
-    img: "/fav.svg",
-    id: 5,
-  },
 ];
-
-// onMounted(() => {
-//   if (window.innerWidth < 1090) {
-//     hideNav.value = true;
-//   }
-// });
 </script>
 <template>
   <nav
     id="nav"
     class="bg-black z-10 overflow-x-hidden w-auto h-full fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
   >
-    <div class="w-full h-1/6 bg-slate-100/5">logo</div>
+    <div class="w-full h-1/6 flex justify-center items-center">
+      <img src="/logo.svg" alt="logo" class="w-14" />
+    </div>
     <div>
       <button
         v-for="item in navigation"
@@ -64,7 +50,7 @@ const navigation = [
           :src="item.img"
           :alt="item.name"
           class="w-10"
-          :style="statePage == item.id ? 'brightness(150)' : ''"
+          :style="statePage == item.id ? 'filter: brightness(150)' : ''"
         />
         <span
           class="max-[1090px]:hidden"

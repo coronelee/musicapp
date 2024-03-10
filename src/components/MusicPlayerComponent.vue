@@ -187,20 +187,17 @@ const showFullPlayer = (event) => {
       fl = 1;
     } else if (event == "hide") {
       fullPlayer.value = false;
-      document.getElementById("player").classList.toggle("max-[850px]:m-2");
-      document
-        .getElementById("player")
-        .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+
       fl = 1;
     } else if (event == "showFull") {
       if (fullPlayer.value) {
       } else {
         if (fl == 0) {
           fullPlayer.value = !fullPlayer.value;
-          document.getElementById("player").classList.toggle("max-[850px]:m-2");
+          document.getElementById("player").classList.remove("max-[850px]:m-2");
           document
             .getElementById("player")
-            .classList.toggle("max-[850px]:w-[calc(100%-20px)]");
+            .classList.remove("max-[850px]:w-[calc(100%-20px)]");
           setTimeout(() => {
             document
               .getElementById("fullPlayer")
@@ -225,6 +222,10 @@ function touchend(event) {
 
   if (difference < -100) {
     fullPlayer.value = false;
+    document.getElementById("player").classList.add("max-[850px]:m-2");
+    document
+      .getElementById("player")
+      .classList.add("max-[850px]:w-[calc(100%-20px)]");
   }
 }
 </script>
@@ -367,12 +368,7 @@ function touchend(event) {
       }"
     >
       <div class="w-full flex">
-        <img
-          src="/hide.svg"
-          alt="hide"
-          class="w-8"
-          @click="showFullPlayer('hide')"
-        />
+        <img src=" " alt="" class="w-8" />
       </div>
       <img
         :src="music.img"

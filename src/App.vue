@@ -4,6 +4,8 @@ import ItemsComponent from "./components/ItemsComponent.vue";
 import MusicPlayerComponent from "./components/MusicPlayerComponent.vue";
 import AlbumComponent from "./components/AlbumComponent.vue";
 import SearchComponent from "./components/SearchComponent.vue";
+import CreatePlaylistComponent from "./components/CreatePlaylistComponent.vue";
+import PlaylistsComponent from "./components/PlaylistsComponent.vue";
 import { ref } from "vue";
 
 const statePage = ref(0);
@@ -44,6 +46,8 @@ const editNameAlbum = (value) => {
         v-if="statePage == 1"
         :editStatePlayer="editStatePlayer"
       />
+      <PlaylistsComponent v-if="statePage == 2" />
+      <CreatePlaylistComponent v-if="statePage == 3" />
     </div>
     <MusicPlayerComponent :statePlayer="statePlayer" v-if="statePlayer != 0" />
   </div>
