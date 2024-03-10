@@ -249,9 +249,8 @@ const showFullPlayer = (event) => {
 
 function touchend(event) {
   let difference = oldTouch - event.changedTouches.item(0).clientY;
-  // console.log(difference);
+
   if (difference < -100) {
-    console.log(difference);
     fullPlayer.value = false;
   }
 }
@@ -312,7 +311,7 @@ function touchend(event) {
             class="max-[850px]:hidden"
           />
           <div
-            class="[&>img]:w-8 [&>img]:cursor-pointer max-[850px]:absolute right-12 top-2/6"
+            class="[&>img]:w-8 [&>img]:cursor-pointer max-[850px]:absolute right-12 top-2/6 max-[550px]:right-6 max-[400px]:right-2"
             id="button"
           >
             <img
@@ -405,7 +404,7 @@ function touchend(event) {
       <img
         :src="music.img"
         alt=""
-        class="w-full rounded-xl max-w-[300px] drop-shadow-2xl"
+        class="w-full rounded-xl max-w-[300px] drop-shadow-2xl animate-[pulseImage_5s_ease-in-out_infinite]"
       />
       <div class="w-full flex flex-col gap-2">
         <div class="w-full flex justify-between">

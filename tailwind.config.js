@@ -20,6 +20,11 @@ export default {
           "0%": { width: "16%" },
           "100%": { width: "8%" },
         },
+        pulseImage: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
       fontFamily: {
         exo: ["exo", "sans-serif"],
