@@ -32,7 +32,7 @@ onMounted(() => {
                 editNameAlbum(albums.name),
                 editStatePage('album')
             "
-            class="text-white flex flex-col justify-start items-center font-exo cursor-pointer rounded-xl px-4 pb-4"
+            class="text-white flex flex-col justify-start items-center font-exo cursor-pointer rounded-xl px- pb-4"
           >
             <img
               :src="albums.img"
@@ -41,8 +41,8 @@ onMounted(() => {
             <div
               class="flex flex-col text-center text-wrap justify-center items-center w-full text-xl w-[175px]"
             >
-              <span class="text-white w-full">{{ albums.name }}</span>
-              <span class="text-[#B3B3B3]">{{ albums.artist }}</span>
+              <span class="text-white w-[175px]">{{ albums.name }}</span>
+              <span class="text-[#B3B3B3] w-[175px]">{{ albums.artist }}</span>
             </div>
           </div>
         </div>
