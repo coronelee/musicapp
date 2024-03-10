@@ -32,7 +32,7 @@ onMounted(() => {
                 editNameAlbum(albums.name),
                 editStatePage('album')
             "
-            class="text-white flex flex-col justify-center items-center font-exo cursor-pointer rounded-xl pb-4"
+            class="text-white flex flex-col justify-start items-center font-exo cursor-pointer rounded-xl px-4 pb-4"
           >
             <img
               :src="albums.img"
