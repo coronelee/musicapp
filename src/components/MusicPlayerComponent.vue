@@ -5,6 +5,7 @@ const props = defineProps({
 
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
+import analyze from "rgbaster";
 const playingSong = ref(true);
 const music = ref({
   id: "",
@@ -19,6 +20,9 @@ const maxRange = ref(0);
 const currentTimeSong = ref();
 const stateMusic = ref(props.statePlayer);
 const fullPlayer = ref(false);
+const colorsGradient = ref([]);
+const valueAlbum = ref(0);
+/// + "&album=" + album
 const editMusic = (id) => {
   axios
     .get("https://f97a390b40b51192.mokky.dev/musics?id=" + id)
@@ -31,6 +35,11 @@ const editMusic = (id) => {
       music.value.src = response.data[0].src;
     });
 };
+const getColorImage = async (img) => {
+  const colorIMG = await analyze(img);
+  colorsGradient.value = [colorIMG[0].color, colorIMG[1].color];
+};
+
 let audio = new Audio();
 
 onMounted(() => {
@@ -52,6 +61,7 @@ watch(
   () => music.value.src,
   (newValue) => {
     editSrcAudio(newValue);
+    getColorImage(music.value.img);
   }
 );
 
@@ -78,10 +88,16 @@ const editSrcAudio = (newValue) => {
         nextPrevMusic(+1);
       }
     }, 1000);
-    durationSong.value =
-      String(Number(String(this.duration).split(".")[0]) / 60).split(".")[0] +
-      ":" +
-      (Number(String(this.duration).split(".")[0]) % 60);
+
+    let minDur = String(Number(String(this.duration).split(".")[0]) / 60).split(
+      "."
+    )[0];
+    let secDur = Number(String(this.duration).split(".")[0]) % 60;
+    if (secDur < 10) {
+      secDur = "0" + secDur;
+      durationSong.value = minDur + ":" + secDur;
+    } else durationSong.value = minDur + ":" + secDur;
+
     maxRange.value = this.duration;
   };
 };
@@ -107,19 +123,90 @@ const pauseSong = () => {
   }
 };
 const nextPrevMusic = (action) => {
-  if (stateMusic.value < 7 && action > 0) {
-    editMusic((stateMusic.value += action));
+  axios
+    .get("https://f97a390b40b51192.mokky.dev/musics?album=" + music.value.album)
+    .then((response) => {
+      valueAlbum.value = response.data.length;
+    });
+
+  if (action > 0) {
+    axios
+      .get(
+        "https://f97a390b40b51192.mokky.dev/musics?album=" + music.value.album
+      )
+      .then((response) => {
+        if (music.value.id == response.data[response.data.length - 1].id) {
+          axios
+            .get(
+              "https://f97a390b40b51192.mokky.dev/musics?album=" +
+                music.value.album
+            )
+            .then((response) => {
+              music.value.id = response.data[0].id;
+              music.value.img = response.data[0].img;
+              music.value.album = response.data[0].album;
+              music.value.artist = response.data[0].artist;
+              music.value.name = response.data[0].name;
+              music.value.src = response.data[0].src;
+            });
+        } else {
+          let nextId = music.value.id + 1;
+          axios
+            .get("https://f97a390b40b51192.mokky.dev/musics?id=" + nextId)
+            .then((response) => {
+              music.value.id = response.data[0].id;
+              music.value.img = response.data[0].img;
+              music.value.album = response.data[0].album;
+              music.value.artist = response.data[0].artist;
+              music.value.name = response.data[0].name;
+              music.value.src = response.data[0].src;
+            });
+        }
+      });
+  } else if (action < 0) {
+    axios
+      .get(
+        "https://f97a390b40b51192.mokky.dev/musics?album=" + music.value.album
+      )
+      .then((response) => {
+        if (music.value.id == response.data[0].id) {
+          axios
+            .get(
+              "https://f97a390b40b51192.mokky.dev/musics?album=" +
+                music.value.album
+            )
+            .then((response) => {
+              music.value.id = response.data[response.data.length - 1].id;
+              music.value.img = response.data[response.data.length - 1].img;
+              music.value.album = response.data[response.data.length - 1].album;
+              music.value.artist =
+                response.data[response.data.length - 1].artist;
+              music.value.name = response.data[response.data.length - 1].name;
+              music.value.src = response.data[response.data.length - 1].src;
+            });
+        } else {
+          let prevId = music.value.id - 1;
+          axios
+            .get("https://f97a390b40b51192.mokky.dev/musics?id=" + prevId)
+            .then((response) => {
+              music.value.id = response.data[0].id;
+              music.value.img = response.data[0].img;
+              music.value.album = response.data[0].album;
+              music.value.artist = response.data[0].artist;
+              music.value.name = response.data[0].name;
+              music.value.src = response.data[0].src;
+            });
+        }
+      });
   }
-  // else editMusic(1);
-  if (stateMusic.value != 1 && action < 0) {
-    editMusic((stateMusic.value += action));
-  }
-  // else editMusic(7);
 };
 let fl = 0;
 const showFullPlayer = (event) => {
   if (window.screen.width > 850) {
-    console.log(window.screen.width);
+    if (event == "pause" || event == "play") {
+      pauseSong();
+      fl = 1;
+    }
   } else {
     if (event == "pause" || event == "play") {
       pauseSong();
@@ -147,29 +234,38 @@ const showFullPlayer = (event) => {
   }
 };
 </script>
-
 <template>
   <div
-    class="bg-[#282828] max-[850px] overflow-hidden h-auto max-[850px]:rounded-xl max-[850px]:m-2 z-20 w-full max-[850px]:w-[calc(100%-20px)] h-[150px] fixed bottom-0 font-exo"
+    class="player max-[850px] overflow-hidden h-auto max-[850px]:rounded-xl max-[850px]:m-2 z-20 w-full max-[850px]:w-[calc(100%-20px)] h-[150px] fixed bottom-0 font-exo"
     id="player"
     @click="showFullPlayer('showFull')"
-    :style="fullPlayer ? 'border-radius: 0' : ''"
+    :style="[
+      fullPlayer ? 'border-radius: 0' : '',
+      {
+        backgroundImage:
+          'linear-gradient(' +
+          colorsGradient[0] +
+          ', ' +
+          colorsGradient[1] +
+          ')',
+      },
+    ]"
   >
     <div
-      class="w-full h-full [&>div]:w-1/3 max-[850px]:[&>div]:w-full [&>div]:w-1/3 justify-between max-[850px]:flex-row flex items-center gap-4 p-4"
+      class="w-full h-full max-[850px]:[&>div]:w-full [&>div]:w-1/3 justify-between max-[850px]:flex-row flex items-center gap-4 p-4"
       v-if="!fullPlayer"
     >
       <div
-        class="flex h-full justify-between max-[850px]:justify-start max-[850px]:h-[50px]"
+        class="flex h-full justify-between gap-4 max-[850px]:justify-start max-[850px]:h-[50px]"
         id="info"
       >
         <img
-          src="/obl.jpeg"
-          class="h-[80px] w-[80px] bg-slate-500 max-[850px]:h-[50px] max-[850px]:w-[50px]"
+          :src="music.img"
+          class="h-[80px] w-[80px] bg-slate-500 max-[850px]:h-[50px] max-[850px]:w-[50px] drop-shadow-2xl"
         />
-        <div class="flex gap-2 px-6 h-[80px] w-2/3 max-[850px]:h-[50px]">
+        <div class="flex gap-2 w-[300px]">
           <div class="flex flex-col gap-2 justify-center items-start w-full">
-            <span class="text-white">{{ music.name }}</span>
+            <span class="text-white w-full">{{ music.name }}</span>
             <span class="text-[#B3B3B3]">{{ music.artist }}</span>
           </div>
         </div>
@@ -200,14 +296,14 @@ const showFullPlayer = (event) => {
             <img
               src="/play.svg"
               alt="play"
-              @click="showFullPlayer($event.target.id)"
+              @click="showFullPlayer('play')"
               id="play"
               v-if="!playingSong"
             />
             <img
               src="/pause.svg"
               alt="pause"
-              @click="showFullPlayer($event.target.id)"
+              @click="showFullPlayer('pause')"
               id="pause"
               v-else
             />
@@ -265,7 +361,15 @@ const showFullPlayer = (event) => {
     </div>
     <div
       v-else
-      class="w-screen h-screen p-4 bg-gradient-to-b from-[#b96a41] to-[#4e3224] flex flex-col justify-between items-center"
+      class="w-screen h-screen p-4 flex flex-col justify-between items-center overflow-hidden"
+      :style="{
+        backgroundImage:
+          'linear-gradient(' +
+          colorsGradient[0] +
+          ', ' +
+          colorsGradient[1] +
+          ')',
+      }"
     >
       <div class="w-full flex">
         <img
@@ -275,7 +379,11 @@ const showFullPlayer = (event) => {
           @click="showFullPlayer('hide')"
         />
       </div>
-      <img src="/obl.jpeg" alt="" class="w-full rounded-xl max-w-[300px]" />
+      <img
+        :src="music.img"
+        alt=""
+        class="w-full rounded-xl max-w-[300px] drop-shadow-2xl"
+      />
       <div class="w-full flex flex-col gap-2">
         <div class="w-full flex justify-between">
           <div class="flex flex-col text-white font-exo">
@@ -347,10 +455,9 @@ input[type="range"] {
 #volume > input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: none;
-  height: 12px;
+  height: 5px;
   width: 6px;
   background: rgb(255, 255, 255);
-  margin-top: -3px;
 }
 #volume > input[type="range"]::-webkit-slider-runnable-track {
   height: 50%;
@@ -365,16 +472,15 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: none;
-  height: 16px;
+  height: 5px;
   width: 10px;
   background: rgb(255, 255, 255);
-  margin-top: -4px;
 }
 /* MOZILLA FIREFOX */
 #volume > input[type="range"]::-moz-range-thumb {
   -webkit-appearance: none;
   border: none;
-  height: 12px;
+  height: 5px;
   width: 6px;
   background: rgb(255, 255, 255);
   margin-top: -3px;
@@ -388,7 +494,7 @@ input[type="range"]::-moz-range-thumb {
   -webkit-appearance: none;
   border: none;
   border-radius: 1px;
-  height: 16px;
+  height: 5px;
   width: 10px;
   background: rgb(255, 255, 255);
   margin-top: -4px;

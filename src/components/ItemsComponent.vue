@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 const props = defineProps({
   editStateAlbum: Function,
+  editNameAlbum: Function,
 });
 const albums = ref([]);
 onMounted(() => {
@@ -27,43 +28,16 @@ onMounted(() => {
           <div
             v-for="albums in albums"
             :key="albums"
-            @click="editStateAlbum(albums.id)"
-            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
+            @click="editStateAlbum(albums.id), editNameAlbum(albums.name)"
+            class="text-white flex font-exo cursor-pointer flex rounded-xl h-[120px] max-[1080px]:h-[100px] overflow-hidden"
           >
-            <img src="/obl.jpeg" class="w-[120px] h-full" />
-            <div class="flex justify-center items-center w-[calc(100%-120px)]">
-              {{ albums.name }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="overflow-x-hidden">
-        <span class="text-white text-3xl font-exo">Good afternoon</span>
-        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828]">
-          <div
-            v-for="albums in albums"
-            :key="albums"
-            @click="editStateAlbum(albums.id)"
-            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
-          >
-            <div class="w-[120px] h-full bg-slate-100">img</div>
-            <div class="flex justify-center items-center w-[calc(100%-120px)]">
-              {{ albums.name }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="overflow-x-hidden">
-        <span class="text-white text-3xl font-exo">Good afternoon</span>
-        <div class="grid grid-cols-3 gap-4 mt-8 [&>div]:bg-[#282828]">
-          <div
-            v-for="albums in albums"
-            :key="albums"
-            @click="editStateAlbum(albums.id)"
-            class="text-white text-2xl font-exo cursor-pointer flex rounded-xl h-[120px] overflow-hidden"
-          >
-            <div class="w-[120px] h-full bg-slate-100">img</div>
-            <div class="flex justify-center items-center w-[calc(100%-120px)]">
+            <img
+              :src="albums.img"
+              class="w-[120px] h-full max-[1080px]:w-[100px]"
+            />
+            <div
+              class="flex text-center justify-center items-center w-full text-xl max-[1080px]:text-xs"
+            >
               {{ albums.name }}
             </div>
           </div>
