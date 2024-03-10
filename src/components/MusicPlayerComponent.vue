@@ -22,17 +22,11 @@ const stateMusic = ref(props.statePlayer);
 const fullPlayer = ref(false);
 const colorsGradient = ref([]);
 const valueAlbum = ref(0);
-/// + "&album=" + album
 const editMusic = (id) => {
   axios
     .get("https://f97a390b40b51192.mokky.dev/musics?id=" + id)
     .then((response) => {
-      music.value.id = response.data[0].id;
-      music.value.img = response.data[0].img;
-      music.value.album = response.data[0].album;
-      music.value.artist = response.data[0].artist;
-      music.value.name = response.data[0].name;
-      music.value.src = response.data[0].src;
+      music.value = response.data[0];
     });
 };
 const getColorImage = async (img) => {
@@ -142,24 +136,14 @@ const nextPrevMusic = (action) => {
                 music.value.album
             )
             .then((response) => {
-              music.value.id = response.data[0].id;
-              music.value.img = response.data[0].img;
-              music.value.album = response.data[0].album;
-              music.value.artist = response.data[0].artist;
-              music.value.name = response.data[0].name;
-              music.value.src = response.data[0].src;
+              music.value = response.data[0];
             });
         } else {
           let nextId = music.value.id + 1;
           axios
             .get("https://f97a390b40b51192.mokky.dev/musics?id=" + nextId)
             .then((response) => {
-              music.value.id = response.data[0].id;
-              music.value.img = response.data[0].img;
-              music.value.album = response.data[0].album;
-              music.value.artist = response.data[0].artist;
-              music.value.name = response.data[0].name;
-              music.value.src = response.data[0].src;
+              music.value = response.data[0];
             });
         }
       });
@@ -176,25 +160,14 @@ const nextPrevMusic = (action) => {
                 music.value.album
             )
             .then((response) => {
-              music.value.id = response.data[response.data.length - 1].id;
-              music.value.img = response.data[response.data.length - 1].img;
-              music.value.album = response.data[response.data.length - 1].album;
-              music.value.artist =
-                response.data[response.data.length - 1].artist;
-              music.value.name = response.data[response.data.length - 1].name;
-              music.value.src = response.data[response.data.length - 1].src;
+              music.value = response.data[response.data.length - 1];
             });
         } else {
           let prevId = music.value.id - 1;
           axios
             .get("https://f97a390b40b51192.mokky.dev/musics?id=" + prevId)
             .then((response) => {
-              music.value.id = response.data[0].id;
-              music.value.img = response.data[0].img;
-              music.value.album = response.data[0].album;
-              music.value.artist = response.data[0].artist;
-              music.value.name = response.data[0].name;
-              music.value.src = response.data[0].src;
+              music.value = response.data[0];
             });
         }
       });
@@ -285,7 +258,7 @@ function touchend(event) {
           class="h-[80px] w-[80px] bg-slate-500 max-[850px]:h-[50px] max-[850px]:w-[50px] drop-shadow-2xl"
         />
         <div class="flex gap-2 w-[300px]">
-          <div class="flex flex-col gap-2 justify-center items-start w-full">
+          <div class="flex flex-col justify-center items-start w-full">
             <span class="text-white w-full">{{ music.name }}</span>
             <span class="text-[#B3B3B3]">{{ music.artist }}</span>
           </div>

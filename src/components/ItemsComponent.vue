@@ -4,6 +4,7 @@ import axios from "axios";
 const props = defineProps({
   editStateAlbum: Function,
   editNameAlbum: Function,
+  editStatePage: Function,
 });
 const albums = ref([]);
 onMounted(() => {
@@ -19,26 +20,29 @@ onMounted(() => {
   <div
     class="bg-[#181818] w-5/6 pb-[200px] py-12 flex flex-col px-8 gap-4 absolute right-0 top-0 text-white text-3xl font-exo"
   >
-    <div class="flex flex-col w-full px-8 h-full gap-12">
+    <div class="flex flex-col w-full h-full gap-12">
       <div class="overflow-x-hidden">
-        <span class="text-white text-3xl font-exo">Good afternoon</span>
-        <div
-          class="grid grid-cols-3 max-[1080px]:grid-cols-2 max-[730px]:grid-cols-1 gap-4 mt-8 [&>div]:bg-[#282828]"
-        >
+        <span class="text-white text-3xl font-exo">Albums</span>
+        <div class="flex flex-wrap gap-4 mt-8 [&>div]:bg-[#1e1e1e]">
           <div
             v-for="albums in albums"
             :key="albums"
-            @click="editStateAlbum(albums.id), editNameAlbum(albums.name)"
-            class="text-white flex font-exo cursor-pointer flex rounded-xl h-[120px] max-[1080px]:h-[100px] overflow-hidden"
+            @click="
+              editStateAlbum(albums.id),
+                editNameAlbum(albums.name),
+                editStatePage('album')
+            "
+            class="text-white flex flex-col justify-center items-center font-exo cursor-pointer rounded-xl pb-4"
           >
             <img
               :src="albums.img"
-              class="w-[120px] h-full max-[1080px]:w-[100px]"
+              class="w-[175px] h-[175px] m-4 rounded-xl shadow-2xl"
             />
             <div
-              class="flex text-center justify-center items-center w-full text-xl max-[1080px]:text-xs"
+              class="flex flex-col text-center text-wrap justify-center items-center w-full text-xl w-[175px]"
             >
-              {{ albums.name }}
+              <span class="text-white w-full">{{ albums.name }}</span>
+              <span class="text-[#B3B3B3]">{{ albums.artist }}</span>
             </div>
           </div>
         </div>
