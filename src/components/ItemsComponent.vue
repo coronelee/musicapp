@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="bg-[#181818] w-5/6 pb-[200px] py-12 flex flex-col px-8 gap-4 absolute right-0 top-0 text-white text-3xl font-exo"
+    class="bg-[#181818] w-5/6 pb-[200px] py-12 flex flex-col pr-2 pl-12 gap-4 absolute right-0 top-0 text-white text-3xl font-exo"
   >
     <div class="flex flex-col w-full h-full gap-12">
       <div class="overflow-x-hidden">

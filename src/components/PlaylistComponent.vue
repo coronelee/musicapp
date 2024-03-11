@@ -6,6 +6,7 @@ const props = defineProps({
   playlistId: String,
   editStatePlayer: Function,
   playlistName: Function,
+  playlistNum: Number,
 });
 
 const list = ref();
@@ -23,12 +24,28 @@ onMounted(() => {
       });
   }
 });
+
+// const deletePlaylist = () => {
+//     axios
+//       .get(
+//         "https://f97a390b40b51192.mokky.dev/playlistUsers?id=" + props.playlistNum
+//       )
+//       .then((response) => {
+//         console.log(response.data);
+//       });
+//   axios.delete("https://f97a390b40b51192.mokky.dev/playlistUsers", {
+//     params: { id: props.playlistNum },
+//   });
+// };
 </script>
 <template>
   <div
     class="bg-[#181818] h-full w-4/5 gap-4 pl-8 absolute pt-8 right-0 top-0 text-white text-3xl flex flex-col justify-start items-center font-exo"
   >
-    <span class="max-[560px]:text-xl">{{ playlistName }}</span>
+    <span class="max-[560px]:text-xl flex justify-between px-4 w-full"
+      ><span>{{ playlistName }}</span>
+      <!-- <img src="/delete.svg" alt="del" class="w-6" @click="deletePlaylist()" /> -->
+    </span>
     <span
       v-for="music in musics"
       :key="music"

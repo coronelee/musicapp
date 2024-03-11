@@ -18,7 +18,10 @@ const loginUser = ref();
 const playlistId = ref();
 const playlistName = ref();
 const auth = ref(false);
-
+const playlistNum = ref();
+const editPlaylistNum = (value) => {
+  playlistNum.value = value;
+};
 const authed = (value) => {
   if (value == false) {
     loginUser.value = "";
@@ -80,6 +83,7 @@ const editLoginUser = (value) => {
         :loginUser="loginUser"
         :editPlaylistId="editPlaylistId"
         :editPlaylistName="editPlaylistName"
+        :editPlaylistNum="editPlaylistNum"
       />
       <CreatePlaylistComponent
         v-if="statePage == 3"
@@ -99,6 +103,7 @@ const editLoginUser = (value) => {
         :playlistId="playlistId"
         :editStatePlayer="editStatePlayer"
         :playlistName="playlistName"
+        :playlistNum="playlistNum"
       />
     </div>
     <MusicPlayerComponent :statePlayer="statePlayer" v-if="statePlayer != 0" />

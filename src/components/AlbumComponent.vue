@@ -22,7 +22,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="bg-[#181818] w-5/6 pb-[200px] py-12 pr-2 flex flex-col px-8 gap-2 absolute right-0 top-0 text-white text-3xl font-exo max-[850px]:w-11/12"
+    class="bg-[#181818] w-4/5 pb-[200px] py-12 pr-2 flex flex-col px-8 gap-2 absolute right-0 top-0 text-white text-3xl font-exo"
   >
     <span class="max-[560px]:text-xl">{{ props.nameAlbum }}</span>
     <span

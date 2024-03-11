@@ -7,6 +7,7 @@ const props = defineProps({
   loginUser: String,
   editPlaylistId: Function,
   editPlaylistName: Function,
+  editPlaylistNum: Function,
 });
 const playlists = ref();
 const idMusics = ref("");
@@ -38,6 +39,7 @@ onMounted(() => {
       <div
         v-if="playlists == 0"
         class="border flex justify-center items-center w-[200px] h-[200px] text-white rounded-xl"
+        @click="editStatePage(3)"
       >
         +
       </div>
@@ -49,7 +51,8 @@ onMounted(() => {
           @click="
             editStatePage('playlist'),
               editPlaylistId(lists.idMusics),
-              editPlaylistName(lists.namePlaylist)
+              editPlaylistName(lists.namePlaylist),
+              editPlaylistNum(lists.id)
           "
         >
           <div>{{ lists.namePlaylist }}</div>
