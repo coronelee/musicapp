@@ -4,6 +4,8 @@ import { onMounted, ref } from "vue";
 defineProps({
   statePage: Number,
   editStatePage: Function,
+  loginUser: String,
+  auth: Boolean,
 });
 const hideNav = ref(false);
 const navigation = [
@@ -35,10 +37,23 @@ const navigation = [
     id="nav"
     class="bg-black z-10 overflow-x-hidden w-auto h-full fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
   >
-    <div class="w-full h-1/6 flex justify-center items-center">
+    <div class="w-full h-1/6 flex justify-center items-center flex-col">
       <img src="/logo.svg" alt="logo" class="w-14" />
+      <button class="hover:cursor-default">
+        <img
+          src="/sign.svg"
+          class="w-8 hover:cursor-pointer"
+          alt=""
+          v-if="!auth"
+          @click="editStatePage('signin')"
+        />
+        <img src="/profile.svg" class="w-8" alt="" v-else />
+      </button>
+      <button @click="editStatePage('signin')" class="underline decoration-2">
+        {{ loginUser }}
+      </button>
     </div>
-    <div>
+    <div class="flex flex-col justify-center items-center">
       <button
         v-for="item in navigation"
         :key="item.name"
