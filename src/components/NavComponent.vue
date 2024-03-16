@@ -53,7 +53,7 @@ const navigation = [
         {{ loginUser }}
       </button>
     </div>
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-start">
       <button
         v-for="item in navigation"
         :key="item.name"
@@ -73,6 +73,13 @@ const navigation = [
           >{{ item.name }}</span
         >
       </button>
+      <a
+        href="/downloadapp/setup.exe"
+        download
+        class="flex gap-4 py-2 px-4 cursor-pointer justify-center items-center"
+        ><img src="/download.svg" alt="download" class="w-8" />
+        <span>Download</span></a
+      >
     </div>
   </nav>
 </template>
