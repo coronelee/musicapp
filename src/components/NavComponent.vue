@@ -89,7 +89,7 @@ const reloadPage = () => {
         download
         class="flex gap-4 py-2 px-4 cursor-pointer justify-center items-center"
         ><img src="/download.svg" alt="download" class="w-8" />
-        <span>Download</span></a
+        <span class="max-[1090px]:hidden">Download</span></a
       >
     </div>
   </nav>
