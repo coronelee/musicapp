@@ -53,7 +53,7 @@ const editLoginUser = (value) => {
 };
 </script>
 <template>
-  <div class="">
+  <div id="app">
     <div class="flex">
       <NavComponent
         :statePage="statePage"

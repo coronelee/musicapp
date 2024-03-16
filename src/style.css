@@ -15,3 +15,15 @@ body {
   font-family: "exo_italic";
   src: url("/fonts/exo-italic.ttf");
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #58585833;
+  border: 5px solid transparent;
+  border-radius: 5px;
+}
