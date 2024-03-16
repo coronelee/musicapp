@@ -131,6 +131,45 @@ const nextPrevMusic = (action) => {
     axios.get("https://f97a390b40b51192.mokky.dev/singles").then((response) => {
       valueAlbum.value = response.data.length;
     });
+    if (action > 0) {
+      axios
+        .get("https://f97a390b40b51192.mokky.dev/singles")
+        .then((response) => {
+          if (music.value.id == response.data[response.data.length - 1].id) {
+            axios
+              .get("https://f97a390b40b51192.mokky.dev/singles")
+              .then((response) => {
+                music.value = response.data[0];
+              });
+          } else {
+            let nextId = music.value.id + 1;
+            axios
+              .get("https://f97a390b40b51192.mokky.dev/singles?id=" + nextId)
+              .then((response) => {
+                music.value = response.data[0];
+              });
+          }
+        });
+    } else if (action < 0) {
+      axios
+        .get("https://f97a390b40b51192.mokky.dev/singles")
+        .then((response) => {
+          if (music.value.id == response.data[0].id) {
+            axios
+              .get("https://f97a390b40b51192.mokky.dev/singles")
+              .then((response) => {
+                music.value = response.data[response.data.length - 1];
+              });
+          } else {
+            let nextId = music.value.id - 1;
+            axios
+              .get("https://f97a390b40b51192.mokky.dev/singles?id=" + nextId)
+              .then((response) => {
+                music.value = response.data[0];
+              });
+          }
+        });
+    }
   } else {
     axios
       .get(
