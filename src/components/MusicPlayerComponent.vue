@@ -1,11 +1,13 @@
 <script setup>
 const props = defineProps({
   statePlayer: Number,
+  type: String,
 });
 
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
 import analyze from "rgbaster";
+
 const playingSong = ref(true);
 const music = ref({
   id: "",
@@ -23,11 +25,19 @@ const fullPlayer = ref(false);
 const colorsGradient = ref([]);
 const valueAlbum = ref(0);
 const editMusic = (id) => {
-  axios
-    .get("https://f97a390b40b51192.mokky.dev/musics?id=" + id)
-    .then((response) => {
-      music.value = response.data[0];
-    });
+  if (props.type == "single") {
+    axios
+      .get("https://f97a390b40b51192.mokky.dev/" + "singles" + "?id=" + id)
+      .then((response) => {
+        music.value = response.data[0];
+      });
+  } else {
+    axios
+      .get("https://f97a390b40b51192.mokky.dev/" + "musics" + "?id=" + id)
+      .then((response) => {
+        music.value = response.data[0];
+      });
+  }
 };
 const getColorImage = async (img) => {
   const colorIMG = await analyze(img);

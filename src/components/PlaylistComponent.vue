@@ -7,6 +7,7 @@ const props = defineProps({
   editStatePlayer: Function,
   playlistName: Function,
   playlistNum: Number,
+  editStatePage: Function,
 });
 
 const list = ref();

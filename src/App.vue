@@ -19,6 +19,7 @@ const playlistId = ref();
 const playlistName = ref();
 const auth = ref(false);
 const playlistNum = ref();
+let type = "";
 const editPlaylistNum = (value) => {
   playlistNum.value = value;
 };
@@ -28,7 +29,8 @@ const authed = (value) => {
   }
   auth.value = value;
 };
-const editStatePlayer = (value) => {
+const editStatePlayer = (value, typeC) => {
+  type = typeC;
   statePlayer.value = value;
 };
 const editPlaylistName = (value) => {
@@ -64,6 +66,7 @@ const editLoginUser = (value) => {
         :editIdAlbum="editIdAlbum"
         :editNameAlbum="editNameAlbum"
         :editStatePage="editStatePage"
+        :editStatePlayer="editStatePlayer"
         v-if="statePage == 0"
       />
       <AlbumComponent
@@ -104,8 +107,14 @@ const editLoginUser = (value) => {
         :editStatePlayer="editStatePlayer"
         :playlistName="playlistName"
         :playlistNum="playlistNum"
+        :editStatePage="editStatePage"
       />
     </div>
-    <MusicPlayerComponent :statePlayer="statePlayer" v-if="statePlayer != 0" />
+
+    <MusicPlayerComponent
+      :statePlayer="statePlayer"
+      :type="type"
+      v-if="statePlayer != 0"
+    />
   </div>
 </template>
