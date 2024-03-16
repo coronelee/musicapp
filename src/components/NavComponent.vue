@@ -31,6 +31,10 @@ const navigation = [
     id: 3,
   },
 ];
+
+const reloadPage = () => {
+  document.location.reload();
+};
 </script>
 <template>
   <nav
@@ -38,7 +42,14 @@ const navigation = [
     class="bg-black z-10 overflow-x-hidden w-auto h-full fixed top-0 left-0 flex flex-col gap-4 text-[#B3B3B3] [&>div>button>img]:w-6 [&div]:flex [&>div>button]:flex [&>div>button]:gap-4 [&>div>button]:py-2 [&>div>button]:px-4 font-exo"
   >
     <div class="w-full h-1/6 flex justify-center items-center flex-col">
-      <img src="/logo.svg" alt="logo" class="w-14" />
+      <div class="flex gap-4">
+        <img src="/logo.svg" alt="logo" class="w-14" /><img
+          class="w-6 cursor-pointer"
+          src="/refresh.svg"
+          alt=""
+          @click="reloadPage"
+        />
+      </div>
       <button class="hover:cursor-default">
         <img
           src="/sign.svg"
